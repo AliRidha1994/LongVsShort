@@ -1,0 +1,40 @@
+### read data  ####
+
+dat <- read.csv('LongVsShortFinalDataFrame .csv',sep=',',header=T,fill=T)
+View(dat)
+
+### Periprosthetic fracture models ####
+dat.fractures<- dat[!(is.na(dat$PPS_long) & is.na(dat$PPS_short)),] # code to get rid of the Na on the outcome and the study 
+dat.fractures
+meta.fractures <- metabin(PPS_long,long,PPS_short,short, studlab = Author, sm='RR', data= dat.fractures)
+meta.fractures
+
+forest(meta.fractures,comb.r=TRUE,comb.f=TRUE) #comb.r and comb.f does the random and fixed effects 
+forest
+funnel(meta.fractures, yaxis = 'invvar' )
+funnel(meta.fractures, yaxis = 'invse' )
+funnel(meta.fractures,yaxis ="size")
+
+### dislocation models ###
+dat.dislocation<- dat[!(is.na(dat$L_dislocations) & is.na(dat$S_dislocations)),]
+dat.dislocation
+meta.dislocation <- metabin(L_dislocations,long,S_dislocations,short, studlab = Author, sm='RR', data= dat.dislocation)
+meta.dislocation
+
+forest(meta.dislocation,comb.r=TRUE,comb.f=TRUE,sortvar = TE,leftcols = c('studlab','effect'), rightcols = c('w.random','effect.ci'))
+forest
+funnel(meta.dislocation, yaxis = 'invvar' )
+funnel(meta.dislocation, yaxis = 'invse' )
+funnel(meta.dislocation,yaxis ="size")
+
+### revisions models ###
+
+dat.revision<- dat[!(is.na(dat$L_revisions) & is.na(dat$R_revisions )),]
+dat.revision
+meta.revision <- metabin(L_revisions,long,R_revisions,short, studlab = Author, sm='RR', data= dat.revision)
+meta.revision
+
+forest(meta.revision,comb.r=TRUE,comb.f=TRUE, sortvar = TE,leftcols = c('studlab','effect'), rightcols = c('w.random','effect.ci')) # sortvar sorts the studies by effect sie, let cols for left coloums anf right for right
+funnel(meta.revision, yaxis = 'invvar' )
+funnel(meta.revision, yaxis = 'invse' )
+funnel(meta.revision,yaxis ="size")
