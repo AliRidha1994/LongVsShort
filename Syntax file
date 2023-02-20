@@ -9,7 +9,8 @@ dat.fractures
 meta.fractures <- metabin(PPS_long,long,PPS_short,short, studlab = Author, sm='RR', data= dat.fractures)
 meta.fractures
 
-forest(meta.fractures,comb.r=TRUE,comb.f=TRUE) #comb.r and comb.f does the random and fixed effects 
+forest(meta.fractures,comb.r=TRUE,comb.f=TRUE,forest(meta.fractures,comb.r=TRUE,comb.f=TRUE,sortvar = TE,leftcols = c('studlab','effect'), rightcols = c('w.random','effect.ci')) #comb.r and comb.f does the random and fixed effects 
+forest) #comb.r and comb.f does the random and fixed effects 
 forest
 funnel(meta.fractures, yaxis = 'invvar' )
 funnel(meta.fractures, yaxis = 'invse' )
